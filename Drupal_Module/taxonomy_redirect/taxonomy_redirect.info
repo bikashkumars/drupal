@@ -1,0 +1,9 @@
+name = Taxonomy redirect
+description = Taxonomy redirection.
+package = Drupal 7 development
+version = VERSION
+core = 7.x
+
+
+
+

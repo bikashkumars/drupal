@@ -1,0 +1,53 @@
+﻿<!DOCTYPE html>
+<html lang="en-us">
+
+<head>
+<meta charset="utf-8" />
+<title>IE7 Border Radius</title>
+<script type="text/javascript" src="http://tylerfarr.dev.gdb-dev.com/sites/all/modules/contrib/jquery_update/replace/jquery.min.js"></script>
+<script type="text/javascript" src="jquery.corner.js"></script>
+<script type="text/javascript" >
+$(document).ready(function() {
+  $('.roundCorner').corner();
+});
+</script>
+<style type="text/css">
+body{
+	background: #fff;
+}
+.roundCorner{
+	width: 300px;
+	padding: 6px;
+	background: url(content-bg.png);
+}
+.roundCorner2{
+	background: #eb008b;
+	border: 1px solid #9c0a60;
+}
+.roundCorner3{
+	background:#6db34e;
+	border:1px solid #43951e;
+	border: 1px solid #696;padding: 60px 0;
+	text-align: center; 
+	width: 200px;
+	-webkit-border-radius: 5px;
+	-moz-border-radius: 5px;
+	border-radius: 5px;
+	background: #EEFF99;
+	behavior: url(PIE.htc);
+}
+
+</style>
+</head>
+
+<body>
+
+<div class="roundCorner">Box one</div>
+<br /><br />
+<div class="roundCorner2">Box two</div>
+<br /><br />
+<div class="roundCorner3">Box three</div>
+
+</body>
+
+</html>
