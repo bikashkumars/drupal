@@ -201,5 +201,17 @@ function taxonomy_redirect_my_file_element_process($element, &$form_state, $form
  function taxonomy_redirect_page_submit($form, $form_state){
    //dpm($form_state, 'Form values');
  }
- 
- 
+ /*Template.php preprocess page*/
+ /*function drupal_cart_preprocess_page(&$variables){
+   if($variables['is_front']){
+    $variables['title'] = ''; // This is optional ... it removes the default Welcome to @site-name
+    $variables['page']['content']['system_main']['default_message'] = array(); // This will remove the 'No front page content has been created yet.'
+  }
+  if (user_is_logged_in()) {
+	 $variables['login'] = t('Welcome !username <a class="btn" href="!logout">Logout</a>', array(
+		  '!username' => l($variables['user']->name, 'user'),
+		  '!logout' => url('logout')
+	 ));
+  }
+}*/
+/* End */
