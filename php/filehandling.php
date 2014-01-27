@@ -52,7 +52,7 @@ if(!empty($_COOKIE["Method"]))
 			//print $perMethod[1]; //JsonString
 			//Sending old values to javascript function
 			$my_settings[$perMethod[0]] = $perMethod[1];
-			//Replacing content if cookie json string is not same as our log json string
+			//Replacing json if cookie json string is not same as our log json string
 			$dataFromCookie = explode("--", $_COOKIE[$perMethod[0]]);
 			if($dataFromCookie[1]!=$perMethod[1])
 			{

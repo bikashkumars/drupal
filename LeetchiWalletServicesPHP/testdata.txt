@@ -1,0 +1,47 @@
+
+{"BankAccountOwnerName":"Mark Zuckerberg","BankAccountOwnerAddress":"1 bis Cit\u00e9 Paradis, 75010 Paris","BankAccountIBAN":"FR3020041010124530725S03383","BankAccountBIC":"CRLYFRPP"}Resource id #4Benificiary created. ID: 1483591 
+
+==[Request body]---'users'----==
+
+{"Email":"somenath@gmail.com","FirstName":"Somenat","LastName":"Dey","Password":"123456789azerty","IP":"127.0.0.1","Birthday":"1388859691","Nationality":"IN","PersonType":"NATURAL_PERSON","Tag":"tag","CanRegisterMeanOfPayment":false}Resource id #6User created. ID: 1483592 
+
+==[Request body]---'wallets'----==
+
+{"Name":"Somenat","Owners":[1483592]}Resource id #8Wallet created. ID: 1483594 
+
+==[Request body]---'contributions'----==
+
+{"UserID":1483592,"WalletID":1483594,"Amount":1000,"ReturnURL":"http:\/\/localhost\/l"}Resource id #10Contribution created. ID: 1483595 
+
+==[Request body]---'transfers'----==
+
+{"PayerID":1483592,"PayerWalletID":0,"Amount":700,"BeneficiaryID":1483591,"BeneficiaryWalletID":1483594}Resource id #12 ==[Response]== stdClass Object ( [ErrorCode] => 0 [TechnicalMessage] => Unsufficient wallet balance [UserMessage] => Unsufficient wallet balance [Type] => UserError ) 
+
+==[Request body]---'withdrawals'----==
+
+{"UserID":1483592,"WalletID":1483594,"BeneficiaryID":1483591,"Amount":700}Resource id #14 ==[Response]== stdClass Object ( [ErrorCode] => 0 [TechnicalMessage] => Le montant Ã  dÃ©penser doit Ãªtre infÃ©rieur au solde de la cagnotte. [UserMessage] => Le montant Ã  dÃ©penser doit Ãªtre infÃ©rieur au solde de la cagnotte. [Type] => UserError )
+
+
+
+
+
+
+==[Request body]---'users'----==
+
+{"Email":"somenath@gmail.com","FirstName":"Somenath","LastName":"Dey","Password":"123456789azerty","IP":"127.0.0.1","Birthday":"1388859691","Nationality":"IN","PersonType":"NATURAL_PERSON","Tag":"tag","CanRegisterMeanOfPayment":false}Resource id #2https://api-preprod.leetchi.com/v1/partner/click2resol/users?ts=1324395087User created. ID: 1483796 
+
+==[Request body]---'wallets'----==
+
+{"Name":"Somenath","RaisingGoalAmount":12000,"Owners":[1483796]}Resource id #4https://api-preprod.leetchi.com/v1/partner/click2resol/wallets?ts=1324395087Wallet created. ID: 1483798 
+
+==[Request body]---'contributions'----==
+
+{"UserID":1483796,"WalletID":1483798,"Amount":1000,"ReturnURL":"http:\/\/localhost\/l"}Resource id #6https://api-preprod.leetchi.com/v1/partner/click2resol/contributions?ts=1324395087Contribution created. ID: 1483799 
+
+==[Request body]---'transfers'----==
+
+{"PayerID":1483796,"PayerWalletID":1483798,"Amount":300,"BeneficiaryID":1483591,"BeneficiaryWalletID":1483594}Resource id #8https://api-preprod.leetchi.com/v1/partner/click2resol/transfers?ts=1324395087 ==[Response]== stdClass Object ( [ErrorCode] => 0 [TechnicalMessage] => This type of transaction is not supported [UserMessage] => This type of transaction is not supported [Type] => UserError ) 
+
+==[Request body]---'withdrawals'----==
+
+{"UserID":1483592,"WalletID":1483594,"BeneficiaryID":1483591,"Amount":70}Resource id #10https://api-preprod.leetchi.com/v1/partner/click2resol/withdrawals?ts=1324395087 ==[Response]== stdClass Object ( [ErrorCode] => 0 [TechnicalMessage] => Le montant Ã  dÃ©penser doit Ãªtre infÃ©rieur au solde de la cagnotte. [UserMessage] => Le montant Ã  dÃ©penser doit Ãªtre infÃ©rieur au solde de la cagnotte. [Type] => UserError )
