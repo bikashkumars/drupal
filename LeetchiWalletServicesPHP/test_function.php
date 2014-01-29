@@ -18,9 +18,9 @@ $options = array(
 	'RaisingGoalAmount' => 12000,
 	'ReturnURL' => 'http://localhost/l',
 	'BankAccountOwnerName' => 'Mark Zuckerberg',
-    'BankAccountOwnerAddress' => '1 bis Cité Paradis, 75010 Paris',
-    'BankAccountIBAN' => 'FR3020041010124530725S03383',
-    'BankAccountBIC' => 'CRLYFRPP',
+  'BankAccountOwnerAddress' => '1 bis Cité Paradis, 75010 Paris',
+  'BankAccountIBAN' => 'FR3020041010124530725S03383',
+  'BankAccountBIC' => 'CRLYFRPP',
 );
 function pay_send_request($path, $method, $options, $defaults) {
 	$debug = false;
@@ -106,9 +106,9 @@ function pay_create_transfers($options) {
 function pay_create_withdrawals($options) {
 	$defaults = array(
 		'UserID' => '',
-        'WalletID' => '',
-        'BeneficiaryID' => '',
-        'Amount' => '',
+    'WalletID' => '',
+    'BeneficiaryID' => '',
+    'Amount' => '',
 	);
 	return pay_send_request('withdrawals', 'POST', $options, $defaults);
 }
@@ -116,9 +116,9 @@ function fetch_wallet($wallet_id) {
 	return $wallet = requestwhitoutprint("wallets/$wallet_id", "GET");;
 }
 /*Site Owner test data:
-Benificiary created. ID: 1483591 
+Benificiary created. ID: 1483591
 User created. ID: 1483592
-Wallet created. ID: 1483594 
+Wallet created. ID: 1483594
 */
 
 $beneficiary_wallet_id = 1483594;
@@ -133,7 +133,9 @@ $wallet_id = 1483594;
 $user_id = 1483592;
 $wallet_flag = 1;
 
-if ($wallet_flag) {
+
+
+if (isset($_POST['wallet']) && $_POST['wallet'] == 1) {
   //$user_id = fetch_wallet($wallet_id);
   //print $user_id ->Owners[0];
   $options['UserID'] = $user_id;
@@ -156,8 +158,8 @@ if ($wallet_flag) {
 				echo "Transfers created. ID: {$transfers->ID}\n";
 			}
 		}
-} 
-else {
+}
+else if (isset($_POST['wallet']) && $_POST['wallet'] == 0) {
 $user = pay_create_user($options);
 if ($user) {
 	if (PAY_DEBUG) {
@@ -206,7 +208,7 @@ if ($user) {
 		    //throw new Exception('Error');
 			return false;
 		}
-		
+
 	}
 	else {
 		// throw new Exception('Wallet not created');
@@ -220,10 +222,25 @@ else {
 
 }
 
-
 /*$benificiary = pay_create_benificiary($options);
 if ($benificiary) {requestwhitoutprint
 		if (PAY_DEBUG) {
 			echo "Benificiary created. ID: {$benificiary->ID}\n";
 		}
 }*/
+?>
+<html>
+    <head>
+         <title>test fc</title>
+    </head>
+    <body>
+      <form action="" method="POST">
+        <lablel>Choose if walllet is existing or not</lablel>
+        <select name="wallet">
+        <option value="1">Yes</option>
+        <option value="0">No</option>
+        </select>
+        <input type="submit" name="mangopay_submit" value="Submit">
+      </form>
+    </body>
+</html>
