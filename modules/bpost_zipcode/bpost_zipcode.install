@@ -1,0 +1,54 @@
+<?php
+/**
+ * @file
+ * Install, update and uninstall functions for the bpost zipcode module.
+ */
+
+/**
+ * Implements hook_uninstall().
+ */
+function bpost_zipcode_uninstall() {
+  drupal_uninstall_schema('zipcode_log');
+}
+
+/**
+ * Implements hook_install().
+ */
+function bpost_zipcode_install() {
+  drupal_install_schema('zipcode_log');
+}
+
+/**
+ * Implements hook_schema().
+ */
+function bpost_zipcode_schema() {
+  $schema['zipcode_log'] = array(
+    'description' => 'The base table for loggin bpost zipcode.',
+    'fields' => array(
+      'zid' => array(
+        'description' => 'The primary identifier for a zipcode.',
+        'type' => 'serial',
+        'unsigned' => TRUE,
+        'not null' => TRUE,
+      ),
+      'zipcode' => array(
+        'description' => 'The bpost zipcodes.',
+        'type' => 'int',
+        'unsigned' => TRUE,
+        'not null' => TRUE,
+        'default' => 0,
+      ),
+      'zipcount' => array(
+        'description' => 'The count based on zipcodes.',
+        'type' => 'int',
+        'unsigned' => TRUE,
+        'not null' => TRUE,
+        'default' => 0,
+      ),
+    ),
+    'primary key' => array('zid'),
+  );
+  return $schema;
+
+}
+

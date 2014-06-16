@@ -1,0 +1,67 @@
+<?php
+/**
+ * @file
+ * Customize drupal defaults
+ */
+
+/**
+ * Implements hook_boot()
+ *
+ *
+ * Function to perform tasks during page initialization.
+ *
+ * Redirect anonymous user in offline mode
+ * Check if the website is currently in offline mode. Notice that the offline mode
+ * is not the same as the default maintenance mode of Drupal. When in offline mode,
+ * every page request by an anonymous user should be redirected to the offline page.
+ * Check if the user is currently browsing the offline page when not in offline mode.
+ * If the users does this, kick him to the front page.
+ */
+
+function custom_settings_boot() {
+  if(!empty($_GET['Title']) && isset($_GET['Title'])) {
+   $_SESSION['Title'] = $_GET['Title'];
+   $_SESSION['FirstName'] = $_GET['FirstName'];
+   $_SESSION['LastName'] = $_GET['LastName'];
+   $_SESSION['Email'] = $_GET['Email'];
+
+  }
+}
+/**
+ * hook_form_alter implementation.
+ */
+function custom_settings_form_alter(&$form, $form_state, $form_id)  {
+    switch ($form_id)  {
+      case 'user_register_form':
+      $form['account']['mail'] = array(
+          '#type' => 'textfield',
+          '#title' => t('E-mail address'),
+          '#access' => 1,
+          '#default_value' => $_SESSION['Email'],
+          '#weight' => -10,
+          '#required' => 1,
+      );
+
+      $form['LastName'] = array(
+          '#title' => t('Last Name'),
+          '#weight' => -10,
+          '#type' => 'textfield',
+          '#access' => 1,
+          '#required' => 10,
+          '#description' => t('Provide a last name for the new account'),
+          '#default_value' => $_SESSION['LastName'],
+       );
+
+      $form['FirstName'] = array(
+          '#title' => t('First Name'),
+          '#weight' => -10,
+          '#type' => 'textfield',
+          '#access' => 1,
+          '#required' => 1,
+          '#description' => t('Provide a first name for the new account'),
+          '#default_value' => $_SESSION['FirstName'],
+       );
+
+       break;
+     }
+  }

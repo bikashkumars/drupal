@@ -1,0 +1,217 @@
+﻿<?php
+/**
+* Implements hook_help
+*/
+function taxonomy_redirect_help($path, $arg) {
+    if ($path == 'admin/help#taxonomy_redirect') {
+    return t('A demonstration module.');
+    }
+}
+/**
+* Implements hook_block_info
+*/
+function taxonomy_redirect_block_info() {
+    $blocks = array();
+    $blocks['list_module'] = array(
+    'info' => t('List Module which are enabled'), 
+    'cache' => DRUPAL_NO_CACHE,
+  );
+    return $blocks;
+}
+/**
+* Implements hook_block_view
+*/
+ function taxonomy_redirect_block_view($delta = '') {
+  if($delta == 'list_module')
+  {
+    $list = module_list();
+    //dpm($list);
+    $theme_args = array('items' => $list, 'type' => 'ol');
+    //$content = theme('item_list', $theme_args);
+    $content = drupal_render(drupal_get_form('left_contact_form'));
+    //$content = 'Wait for content';
+    $block = array(
+    'subject' => t('Enabled Modules'),
+    'content' => $content,
+        );
+    return $block;
+  }
+ }
+ 
+ function left_contact_form(){
+ 
+   $form['desc'] = array( 
+    '#type' => 'textarea',
+	'#title' => t('words list'),
+	'#description' => t('Description goes here'),
+         '#default_value' => variable_get('left_contact')
+   ); 
+   
+   $form['selectbox'] = array(
+    '#type' => 'select', 
+    '#title' => t('Select box'), 
+    '#default_value' => 2, 
+    '#options' => array(
+      1 => 'Option A', 
+      2 => 'Option B', 
+      3 => 'Option C',
+    ), 
+    '#description' => t('First Name'),
+  );
+   $active = array(0 => t('Closed'), 1 => t('Active'));
+   $form['radiosbtn'] = array(
+    '#type' => 'radios',
+    '#title' => t('Poll status'),
+    '#options' => $active,
+    '#description' => t('When a poll is closed, visitors can no longer vote for it.'),
+     '#default_value' => variable_get('left_contact')
+  );
+   
+ $form['actions']['submit'] = array(
+    '#type' => 'submit',
+    '#value' => t('Save')
+	);
+  return $form;
+ }
+
+ function left_contact_form_submit($form, &$form_state){
+     $desc = $form_state['input']['desc'];
+     $radiosbtn = $form_state['input']['radiosbtn'];
+     variable_set('left_contact', $desc);
+     variable_set('left_contact', $radiosbtn);
+     drupal_set_message('All value has been saved');
+ }
+
+ 
+/**
+* Implements hook_form_alter
+*/
+
+function taxonomy_redirect_form_alter(&$form, &$form_state, $form_id){
+  if($form_id == 'article_node_form')
+  {
+	$form['actions']['submit']['#submit'] = array_merge(array('your_form_submit'), $form['actions']['submit']['#submit']);
+  }
+  if($form_id == 'webform_client_form_1')
+  {
+	 //dpm($form);
+	 
+	 $form["submitted"]['image_upload2']['#process'] = array('taxonomy_redirect_my_file_element_process');
+	 $form["submitted"]['image_upload']['#process'] = array('taxonomy_redirect_my_file_element_process');
+	 $form["submitted"]['fake1'] = array(
+		'#type' => 'textfield', 
+		'#title' => ' ', 
+		//'#required' => true,
+		'#attributes' => array('readonly' => 'readonly'),
+	);
+	 $form['#validate'][]='taxonomy_redirect_validate';
+	 //dpm($form);
+	 
+  }
+   return $form;
+  
+ }
+ 
+
+ 
+function taxonomy_redirect_validate(&$form, &$form_state)
+ {
+	//dpm($form_state['values']['submitted']['fake1']); 
+	if(empty($form_state['values']['submitted']['fake1']))
+	{
+		form_set_error('submitted][fake1', ' ');
+	}
+	if(!empty($form_state['values']['submitted']['fake1']))
+	{
+	   if(!empty($_FILES['files']['type']['submitted_image_upload']))
+	   {
+			$ext  = explode('/',$_FILES['files']['type']['submitted_image_upload']);
+			if(is_array($ext) && (!empty($ext)) && $ext!= 0 )
+			{
+				@$fext = $ext[1];
+				if($fext!='png')
+				{
+					form_set_error('submitted][fake1', ' ');
+				}
+			}
+		}
+	  }
+
+ }
+ /**
+  *Implements removing upload and remove btn form form
+  */
+function taxonomy_redirect_my_file_element_process($element, &$form_state, $form) {
+  $element = file_managed_file_process($element, $form_state, $form);
+  $element['upload_button']['#access'] = FALSE;
+  $element['remove_button']['#access'] = FALSE;
+  return $element;
+  
+}
+
+ /**
+  *Implements custom submit handler
+  * @param type $form
+  * @param array $form_state 
+  */
+ function taxonomy_redir_node_form_submit($form, &$form_state) {
+   //dpm('This my own funtion');
+   //dpm($form_state, 'Form state');
+   //dpm($form_state['values']);
+   //dpm($form_state['values']['field_course'][LANGUAGE_NONE][0]['tid'], 'Form state values');
+    $term_id = $form_state['values']['field_course'][LANGUAGE_NONE][0]['tid'];
+   //taxonomy/term/2
+   $form_state['redirect'] = "taxonomy/term/" .$term_id;
+   
+ }
+ 
+ /**
+ * Implements hook_menu
+ */
+ function taxonomy_redirect_menu(){
+   $items['admin/config/development/custommenu'] = array(
+    'title' => 'My Custom Menu',
+	'description' => 'Mange my module',
+	'page callback' => 'drupal_get_form',
+	'page arguments' => array('taxonomy_redirect_page'),
+	'access callback' => 'user_access',
+	'access arguments' => array('administer_site_configuration'),
+	'menu_name' => 'management'
+	
+	
+   ); 
+   return $items;
+ }
+ /**
+ * Building the page
+ */
+ function taxonomy_redirect_page(){
+   $form['my_form'] = array( 
+    '#type' => 'textarea',
+	'#title' => t('words list'),
+	'#description' => t('Description goes here')
+   ); 
+   $form['actions']['submit'] = array(
+    '#type' => 'submit',
+    '#value' => t('Save')
+	);
+  return $form;
+ }
+ 
+ function taxonomy_redirect_page_submit($form, $form_state){
+   //dpm($form_state, 'Form values');
+ }
+ /*Template.php preprocess page*/
+ /*function drupal_cart_preprocess_page(&$variables){
+   if($variables['is_front']){
+    $variables['title'] = ''; // This is optional ... it removes the default Welcome to @site-name
+    $variables['page']['content']['system_main']['default_message'] = array(); // This will remove the 'No front page content has been created yet.'
+  }
+  if (user_is_logged_in()) {
+	 $variables['login'] = t('Welcome !username <a class="btn" href="!logout">Logout</a>', array(
+		  '!username' => l($variables['user']->name, 'user'),
+		  '!logout' => url('logout')
+	 ));
+  }
+}*/
+/* End */

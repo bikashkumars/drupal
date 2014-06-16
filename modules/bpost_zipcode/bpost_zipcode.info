@@ -1,0 +1,4 @@
+name = bpost zipode
+description = The bpost zipcode is used for logging zipcode in drupal
+core = 7.x
+package = Custom Modules
