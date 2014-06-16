@@ -1,5 +1,0 @@
-name = Custom Settings
-description = Module to manage various site components like hooks, alters and other adjustments.
-package = Custom Modules
-core = 7.x
-project = "custom_settings"
