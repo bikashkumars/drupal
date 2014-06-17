@@ -28,8 +28,8 @@
   );
   $categories = explode(',', (string)$myads->categories);
   $path = URL_SERVICE_IMG . '/' . (string)$myads->oid;
-  $start_date = strtotime((string)$myads->startdate);
-  $end_date = strtotime((string)$myads->enddate);
+  $start_date = @strtotime((string)$myads->startdate);
+  $end_date = @strtotime((string)$myads->enddate);
   $options = array(
     'attributes' => array(
       'target' => '_blank',
