@@ -1,0 +1,4 @@
+name = Voxeu job feed
+description = Voxeu external job feed with custom display templates.
+core = 6.x
+package = "Vox Custom"
