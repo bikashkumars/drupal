@@ -1,0 +1,5 @@
+name = test
+description = test
+package = SA
+core = 7.x
+weight = 999
