@@ -9,31 +9,13 @@ function test_menu() {
 
   $menu['test/testform'] = array(
     'title' => t('Test form'),
-    'page callback' => 'test_module_form',
-    'page arguments' => array(2),
+    'page callback' => 'drupal_get_form',
+    'page arguments' => array('dr_search_test_form'),
     'access callback' => true,
     'type' => MENU_CALLBACK,
   );
 
   return $menu;
-}
-
-
-
-
-/**
-* This function gets called in the browser address bar for:
-* "http://yourhost/my_module/form" or
-* "http://yourhost/?q=my_module/form". It will generate
-* a page with this form on it.
-*/
-function test_module_form() {
-
-  // This form calls the form builder function via the
-  // drupal_get_form() function which takes the name of this form builder
-  // function as an argument. It returns the results to display the form.
-  return drupal_get_form('dr_search_test_form');
-
 }
 
 function dr_search_test_form($form, &$fstate) {
