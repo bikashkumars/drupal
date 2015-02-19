@@ -1,0 +1,11 @@
+diff --git a/php/filehandling.php b/php/filehandling.php
+index 9077b93..d6b6786 100644
+--- a/php/filehandling.php
++++ b/php/filehandling.php
+@@ -1,5 +1,5 @@
+ <?php
+-$x = 1;
++$x = 12222222222222222222222;
+ $json = '{
+     "glossary": {
+         "title": "example glossary",
