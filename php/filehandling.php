@@ -1,4 +1,5 @@
 <?php
+$x = 1;
 $json = '{
     "glossary": {
         "title": "example glossary",
